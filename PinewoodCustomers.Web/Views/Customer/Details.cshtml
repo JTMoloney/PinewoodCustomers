@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Customer Details";
+}
+@using PinewoodCustomers.Common.Models;
+@model Customer;
+
+<h3>Customer Details</h3>
+
+<form method="post" action="/Customer/Save">
+    @* Hidden Id Field *@
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    
+    <div class="mb-2">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" value="@Model.Email" required />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" value="@Model.Name" required />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <div>
+        <button type="submit">Save Customer</button>
+    </div>
+</form>

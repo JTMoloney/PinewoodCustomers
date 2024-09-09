@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Customer Index";
+}
+@using PinewoodCustomers.Common.Models;
+@model List<Customer>;
+
+<h3>Customer Index</h3>
+
+<td><a href="/Customer/Create">Create</a></td>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td><a href="/Customer/Details/@customer.Id">@customer.Email</a></td>
+                    <td>@customer.Name</td>
+                    <td><a href="#" onclick="deleteCustomer(event, '@customer.Id')">Delete</a></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" class="text-center">No Customers.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function deleteCustomer(event, id) {
+        // Prevent any default behaviours
+        event.preventDefault(); 
+
+        // Manually calling the Controller, due to it being a DELETE endpoint
+        fetch(`/Customer/Delete/${id}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred.');
+        });
+    }
+</script>
